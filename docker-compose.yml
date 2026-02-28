@@ -1,0 +1,13 @@
+services:
+  minerva:
+    build: .
+    restart: unless-stopped
+    environment:
+      - MINERVA_SERVER=https://minerva-archive.org
+    volumes:
+      - minerva-state:/root/.minerva-dpn
+      # Alternatively, use a bind mount
+      # - /mnt/user/appdata/minerva:/root/.minerva-dpn
+
+volumes:
+  minerva-state:
