@@ -2,9 +2,15 @@
 # Entrypoint wrapper - waits for token file before starting worker
 
 TOKEN_FILE="/root/.minerva-dpn/token"
+SCRIPT_URL='https://minerva-archive.org/worker/download'
 
 echo "Minerva DPN Worker - Container Entrypoint"
 echo "=========================================="
+
+
+echo "Obtaining script from $SCRIPT_URL"
+wget $SCRIPT_URL -O /app/minerva.py -q
+sleep 5
 
 # Extract version from the downloaded script
 VERSION=$(grep "^VERSION = " /app/minerva.py | sed "s/VERSION = '\(.*\)'/\1/")
@@ -24,6 +30,9 @@ if [ ! -f "$TOKEN_FILE" ]; then
     done
     echo "Token found! Starting worker..."
 fi
+
+echo "Note: Due to the limitations of this minimal container, progress bars will not render."
+echo "Other messages, such as acquiring jobs, completion notifications, and errors will still display."
 
 # Run the official script with any passed arguments
 exec python /app/minerva.py "$@"

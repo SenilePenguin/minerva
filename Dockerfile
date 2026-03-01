@@ -8,8 +8,7 @@ RUN pip install httpx rich click --no-cache-dir
 
 # Setup directories and files. Deletes temp files in case it's been a while and they are stale/no longer assigned.
 WORKDIR /app
-RUN rm /root/.minerva-dpn/tmp
-RUN wget https://minerva-archive.org/worker/download -O minerva.py
+RUN rm /root/.minerva-dpn/tmp || true
 
 # Copy entrypoint wrapper
 COPY entrypoint.sh /entrypoint.sh
