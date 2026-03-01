@@ -4,6 +4,8 @@ Distributed download client for the Minerva Archive project. Volunteers download
 
 Based on [minerva.py](https://gist.github.com/bl791/d14f8d1b27492a17fbbbadc15797cb4b) by [bl791](https://gist.github.com/bl791).
 
+Container fetches the official worker script from Minerva-Archive.org at build time.
+
 
 ## What it does
 1. Polls the Minerva server for download jobs
@@ -11,8 +13,7 @@ Based on [minerva.py](https://gist.github.com/bl791/d14f8d1b27492a17fbbbadc15797
 3. Uploads completed files back to the server
 4. Repeats
 
-The script has been modified from it's original form to wait for the token to be added instead of exiting for convenience. It also has an unofficial patch for handling larger files. 
-
+The entrypoint will wait for the token to be added before launching the minerva script.
 You will need to copy your token file manually, as the container has no browser for auth.
 
 
@@ -48,10 +49,16 @@ This example assumes a bind mount, formatted for Unraid. Your environment may va
 
 ```
 docker build -t senilepenguin/minerva .
-docker run -d --name minerva --restart unless-stopped -e MINERVA_SERVER=https://minerva-archive.org -v /mnt/user/appdata/minerva:/root/.minerva-dpn senile/minerva
+docker run -d --name minerva --restart unless-stopped -e MINERVA_SERVER=https://minerva-archive.org -v /mnt/user/appdata/minerva:/root/.minerva-dpn senilepenguin/minerva
 ```
 
 Once again, the token should be placed in the directory manually as the container cannot do auth on it's own. In this example, you would result in `/mnt/user/appdata/minerva/token`.
+
+## Advanced
+To pass parameters to the `minerva.py` script, append them at the end of your docker run command, such as:
+```
+docker run -d --name minerva --restart unless-stopped -e MINERVA_SERVER=https://minerva-archive.org -v /mnt/user/appdata/minerva:/root/.minerva-dpn senilepenguin/minerva run -c 10 -b 20
+```
 
 
 ## Environment variables

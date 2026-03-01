@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project state (don't copy local token/dev files)
+state/
+*.token
+token
+
+# Local modified script (we download official one)
+minerva.py
+
+# Docs
+README.md
+*.md
+
+# Logs
+*.log
